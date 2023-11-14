@@ -1,0 +1,26 @@
+package com.github.youssfbr.dslist.services.impl;
+
+import com.github.youssfbr.dslist.dto.GameResponseDTO;
+import com.github.youssfbr.dslist.repositories.IGameRepository;
+import com.github.youssfbr.dslist.services.IGameService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class GameService implements IGameService {
+
+    private final IGameRepository gameRepository;
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<GameResponseDTO> findAll() {
+        return gameRepository.findAll()
+                .stream()
+                .map(GameResponseDTO::new)
+                .toList();
+    }
+}
