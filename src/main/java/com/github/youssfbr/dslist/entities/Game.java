@@ -24,6 +24,7 @@ public class Game {
     private Double score;
     private String imgUrl;
     private String shortDescription;
+    @Column(columnDefinition = "text")
     private String longDescription;
 
 
