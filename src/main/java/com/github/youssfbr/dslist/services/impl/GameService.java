@@ -1,5 +1,6 @@
 package com.github.youssfbr.dslist.services.impl;
 
+import com.github.youssfbr.dslist.dto.GameByIdResponseDTO;
 import com.github.youssfbr.dslist.dto.GameResponseDTO;
 import com.github.youssfbr.dslist.repositories.IGameRepository;
 import com.github.youssfbr.dslist.services.IGameService;
@@ -22,5 +23,13 @@ public class GameService implements IGameService {
                 .stream()
                 .map(GameResponseDTO::new)
                 .toList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public GameByIdResponseDTO findById(Long id) {
+        return gameRepository.findById(id)
+                .map(GameByIdResponseDTO::new)
+                .orElse(null);
     }
 }
