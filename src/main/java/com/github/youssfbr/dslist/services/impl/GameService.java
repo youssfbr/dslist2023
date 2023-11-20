@@ -2,6 +2,7 @@ package com.github.youssfbr.dslist.services.impl;
 
 import com.github.youssfbr.dslist.dto.GameByIdResponseDTO;
 import com.github.youssfbr.dslist.dto.GameResponseDTO;
+import com.github.youssfbr.dslist.projections.IGameMinProjection;
 import com.github.youssfbr.dslist.repositories.IGameRepository;
 import com.github.youssfbr.dslist.services.IGameService;
 import lombok.RequiredArgsConstructor;
@@ -31,5 +32,12 @@ public class GameService implements IGameService {
         return gameRepository.findById(id)
                 .map(GameByIdResponseDTO::new)
                 .orElse(null);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<GameResponseDTO> findByList(Long listId) {
+        List<IGameMinProjection> result = gameRepository.searchByList(listId);
+        return result.stream().map(GameResponseDTO::new).toList();
     }
 }
